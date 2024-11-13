@@ -24,7 +24,7 @@ Example Playbook
   hosts: all
   become: true
   roles:
-    - kubernetes.multi
+    - Talhajuikar.kubernetes.multi
 ```
 
 License
