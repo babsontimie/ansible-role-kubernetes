@@ -1,0 +1,13 @@
+---
+- name: Ensure all packages are up to date
+  apt:
+    upgrade: dist
+    update_cache: yes
+  
+- name: Disable AppArmor
+  command: systemctl disable apparmor
+  ignore_errors: true
+
+- name: Disable ufw
+  command: systemctl disable ufw
+  ignore_errors: true
