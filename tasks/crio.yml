@@ -1,0 +1,61 @@
+---
+- name: Tasks for RedHat-based systems
+  block:
+    - name: Add CRI-O repo fot RedHat
+      yum_repository:
+        name: cri-o
+        description: CRI-O
+        enabled: true
+        gpgcheck: true
+        baseurl: "{{ crio_redhat_repo_base_url }}"
+        gpgkey: "{{ crio_redhat_repo_gpgkey }}"
+        state: present
+
+    - name: Install package dependencies
+      yum:
+        name: "container-selinux"
+        state: present
+
+    - name: Install CRI-O RedHat
+      yum:
+        name: "cri-o"
+        state: present
+  when: ansible_os_family == 'RedHat'
+
+
+- name: Tasks for Debian-based systems
+  block:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install dependencies for adding repositories
+      apt:
+        name:
+          - software-properties-common
+          - curl
+        state: present
+
+    - name: Download CRI-O GPG key for Debian
+      ansible.builtin.apt_key:
+        url: "{{ crio_debian_repo_gpgkey }}"
+        state: present
+        keyring: "/etc/apt/keyrings/cri-o-apt-keyring.gpg"
+
+    - name: Add CRI-O repo for Debian
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] {{ crio_debian_repo_url }} /"
+        state: present
+
+    - name: Install CRI-O Debian
+      apt:
+        name: "cri-o"
+        state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure CRI-O is started and enabled
+  service:
+    name: crio
+    state: started
+    enabled: true
+  when: ansible_os_family in ['RedHat', 'Debian']

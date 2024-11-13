@@ -1,0 +1,29 @@
+---
+# tasks file for kubernetes.multi
+- name: Import vars according to OS
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Disable swap and remove entry from /etc/fstab
+  command: swapoff -a
+  replace:
+    path: /etc/fstab
+    regexp: '^\s*([^#\s]+\s+){2}swap\s+'
+    replace: '# \g<0>'
+
+- name: Sysctl setup
+  include_tasks: sysctl.yml
+
+- include_tasks: setup-redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: crio.yml
+
+- name: Install Kubernetes packages.
+  package:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  notify: restart kubelet
+  with_items: "{{ kubernetes_packages }}"

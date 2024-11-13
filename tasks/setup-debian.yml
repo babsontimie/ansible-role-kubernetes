@@ -1,0 +1,37 @@
+---
+- name: Ensure all packages are up to date
+  apt:
+    upgrade: dist
+    update_cache: yes
+  
+- name: Disable AppArmor
+  command: systemctl disable apparmor
+  ignore_errors: true
+
+- name: Disable ufw
+  command: systemctl disable ufw
+  ignore_errors: true
+
+- name: Add Kubernetes repo
+- name: Install required packages
+  apt:
+    name: 
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gpg
+    state: present
+
+- name: Add Kubernetes apt key
+  apt_key:
+    url: "{{ kubernetes_debian_repo_gpgkey }}"
+    state: present
+
+- name: Add Kubernetes repository
+  apt_repository:
+    repo: 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] {{ kubernetes_debian_repo_base_url }} /'
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: yes

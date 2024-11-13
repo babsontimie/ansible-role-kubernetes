@@ -1,0 +1,9 @@
+---
+procps_package: procps
+kubelet_environment_file_path: /etc/default/kubelet
+
+kubernetes_debian_repo_base_url: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/deb/"
+kubernetes_debian_repo_gpgkey: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/Release.key"
+
+crio_debian_repo_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/deb/"
+crio_debian_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/deb/Release.key"
