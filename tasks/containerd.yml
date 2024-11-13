@@ -1,0 +1,58 @@
+---
+- name: Tasks for RedHat based systems 
+  block:
+    - name: Add docker-ce gpg key
+      rpm_key:
+        key: "{{ containerd_redhat_repo_gpgkey }}"
+        state: present
+
+    - name: Add docker-ce repo for RedHat
+      get_url:
+        url: "{{ containerd_redhat_repo_base_url }}"
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: 0644
+    
+    - name: Enable docker-ce-stable repo
+      ini_file:
+        path: /etc/yum.repos.d/docker-ce.repo
+        section: docker-ce-stable
+        option: enabled
+        value: '1'
+
+    - name: Install package dependencies
+      yum:
+        name: "container-selinux"
+        state: present
+
+    - name: Install containerd RedHat
+      yum:
+        name: "containerd"
+        state: present
+        update_cache: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Tasks for Debian based systems
+  block:
+    - name: Add docker-ce gpg key
+      apt_key:
+        url: "{{ containerd_apt_gpg_key }}"
+        state: present
+
+    - name: Add docker-ce repo for Debian/Ubuntu
+      apt_repository:
+        repo: "{{ containerd_apt_repo }}"
+        state: present
+
+    - name: Install containerd Debian
+      apt:
+        name: "containerd.io"
+        state: present
+        update_cache: true
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure containerd is started and enabled
+  service:
+    name: containerd
+    state: started
+    enabled: true
+  when: ansible_os_family in ['RedHat', 'Debian']

@@ -12,7 +12,13 @@
 - include_tasks: setup-debian.yml
   when: ansible_os_family == 'Debian'
 
-- include_tasks: crio.yml
+- name: Setup container runtime CRI-O
+  include_tasks: crio.yml
+  when: container_runtime == 'crio'
+
+- name: Setup container runtime containerd
+  include_tasks: containerd.yml
+  when: container_runtime == 'containerd'
 
 - name: Install Kubernetes packages.
   package:
@@ -20,3 +26,4 @@
     state: "{{ item.state | default('present') }}"
   notify: restart kubelet
   with_items: "{{ kubernetes_packages }}"
+

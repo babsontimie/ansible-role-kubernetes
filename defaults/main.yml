@@ -1,6 +1,9 @@
 ---
 kubernetes_version: "1.30"
+
 crio_version: "1.30"
+
+container_runtime: "crio"
 
 kubernetes_packages:
   - name: kubelet
