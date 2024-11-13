@@ -1,2 +1,5 @@
 ---
-# handlers file for kubernetes.multi
+- name: restart kubelet
+  service:
+    name: kubelet
+    state: restarted

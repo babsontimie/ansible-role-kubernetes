@@ -25,3 +25,7 @@
     baseurl: "{{ kubernetes_redhat_repo_base_url }}"
     gpgkey: "{{ kubernetes_redhat_repo_gpgkey }}"
     state: present
+
+- name: Update yum cache
+  yum:
+    update_cache: yes

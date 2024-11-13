@@ -3,7 +3,6 @@
 - name: Import vars according to OS
   include_vars: "{{ ansible_os_family }}.yml"
 
-
 - name: Disable swap and remove entry from /etc/fstab
   command: swapoff -a
   replace:
@@ -13,12 +12,14 @@
 
 - name: Sysctl setup
   include_tasks: sysctl.yml
-  
+
 - include_tasks: setup-redhat.yml
   when: ansible_os_family == 'RedHat'
 
 - include_tasks: setup-debian.yml
   when: ansible_os_family == 'Debian'
+
+- include_tasks: crio.yml
 
 - name: Install Kubernetes packages.
   package:
