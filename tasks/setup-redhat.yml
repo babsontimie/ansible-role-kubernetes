@@ -22,8 +22,14 @@
     description: Kubernetes
     enabled: true
     gpgcheck: true
-    baseurl: "{{ kubernetes_redhat_repo_base_url }}"
-    gpgkey: "{{ kubernetes_redhat_repo_gpgkey }}"
+    repo_gpgcheck: true
+    baseurl: "{{ kubernetes_yum_base_url }}"
+    gpgkey: "{{ kubernetes_yum_gpg_key }}"
+    state: present
+
+- name: Add Kubernetes GPG keys.
+  rpm_key:
+    key: "{{ kubernetes_yum_gpg_key }}"
     state: present
 
 - name: Update yum cache

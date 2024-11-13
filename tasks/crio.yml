@@ -37,13 +37,13 @@
         state: present
 
     - name: Download CRI-O GPG key for Debian
-      ansible.builtin.apt_key:
+      apt_key:
         url: "{{ crio_debian_repo_gpgkey }}"
         state: present
         keyring: "/etc/apt/keyrings/cri-o-apt-keyring.gpg"
 
     - name: Add CRI-O repo for Debian
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] {{ crio_debian_repo_url }} /"
         state: present
 

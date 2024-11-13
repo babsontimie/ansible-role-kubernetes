@@ -2,8 +2,8 @@
 procps_package: procps-ng
 kubelet_environment_file_path: /etc/sysconfig/kubelet
 
-kubernetes_redhat_repo_base_url: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/rpm/"
-kubernetes_redhat_repo_gpgkey: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/rpm/repodata/repomd.xml.key"
+kubernetes_yum_base_url: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/rpm/"
+kubernetes_yum_gpg_key: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/rpm/repodata/repomd.xml.key"
 
-crio_redhat_repo_base_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/rpm/"
-crio_redhat_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/rpm/repodata/repomd.xml.key"
+crio_redhat_repo_base_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/rpm/"
+crio_redhat_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/rpm/repodata/repomd.xml.key"

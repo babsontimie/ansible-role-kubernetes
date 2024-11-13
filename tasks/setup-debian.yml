@@ -12,7 +12,7 @@
   command: systemctl disable ufw
   ignore_errors: true
 
-- name: Add Kubernetes repo
+
 - name: Install required packages
   apt:
     name: 
@@ -22,16 +22,22 @@
       - gpg
     state: present
 
-- name: Add Kubernetes apt key
-  apt_key:
-    url: "{{ kubernetes_debian_repo_gpgkey }}"
-    state: present
+- name: Prepare apt keyring directory.
+  ansible.builtin.file:
+    path: "{{ kubernetes_apt_keyring_file | dirname }}"
+    state: directory
+    mode: 0755
 
-- name: Add Kubernetes repository
-  apt_repository:
-    repo: 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] {{ kubernetes_debian_repo_base_url }} /'
-    state: present
+- name: Get Kubernetes apt key.
+  ansible.builtin.get_url:
+    url: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/Release.key"
+    dest: "{{ kubernetes_apt_keyring_file }}"
+    mode: '0644'
+    force: true
 
-- name: Update apt cache
-  apt:
-    update_cache: yes
+- name: Add Kubernetes repository.
+  ansible.builtin.apt_repository:
+    repo: "{{ kubernetes_apt_repository }}"
+    filename: pkgs_k8s_io
+    state: present
+    update_cache: true

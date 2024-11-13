@@ -5,6 +5,7 @@
 
 - name: Disable swap and remove entry from /etc/fstab
   command: swapoff -a
+- name: remove entry from /etc/fstab
   replace:
     path: /etc/fstab
     regexp: '^\s*([^#\s]+\s+){2}swap\s+'

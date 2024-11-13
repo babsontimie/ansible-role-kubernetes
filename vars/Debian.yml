@@ -2,8 +2,11 @@
 procps_package: procps
 kubelet_environment_file_path: /etc/default/kubelet
 
-kubernetes_debian_repo_base_url: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/deb/"
-kubernetes_debian_repo_gpgkey: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_version }}/Release.key"
 
-crio_debian_repo_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/deb/"
-crio_debian_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/{{ crio_version }}/deb/Release.key"
+kubernetes_apt_keyring_file: "/etc/apt/keyrings/kubernetes-apt-keyring.asc"
+kubernetes_apt_repository: "deb [signed-by={{ kubernetes_apt_keyring_file }}] https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/ /"
+
+
+
+crio_debian_repo_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/deb/"
+crio_debian_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/deb/Release.key"

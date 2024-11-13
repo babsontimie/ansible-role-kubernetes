@@ -11,3 +11,5 @@ kubernetes_packages:
     state: present
   - name: kubernetes-cni
     state: present
+  - name: cri-tools
+    state: present
