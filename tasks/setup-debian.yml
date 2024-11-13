@@ -16,28 +16,29 @@
 - name: Install required packages
   apt:
     name: 
+      - software-properties-common
       - apt-transport-https
       - ca-certificates
       - curl
       - gpg
     state: present
+    update_cache: true
 
 - name: Prepare apt keyring directory.
-  ansible.builtin.file:
-    path: "{{ kubernetes_apt_keyring_file | dirname }}"
+  file:
+    path: "{{ kubernetes_apt_keyring | dirname }}"
     state: directory
     mode: 0755
 
 - name: Get Kubernetes apt key.
-  ansible.builtin.get_url:
+  apt_key:
     url: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/Release.key"
-    dest: "{{ kubernetes_apt_keyring_file }}"
-    mode: '0644'
-    force: true
+    keyring: "{{ kubernetes_apt_keyring }}"
+    state: present
 
 - name: Add Kubernetes repository.
-  ansible.builtin.apt_repository:
-    repo: "{{ kubernetes_apt_repository }}"
+  apt_repository:
+    repo: "deb [signed-by={{ kubernetes_apt_keyring }}] {{ kubernetes_apt_repository }} /"
     filename: pkgs_k8s_io
     state: present
     update_cache: true

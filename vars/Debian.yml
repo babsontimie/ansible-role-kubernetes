@@ -3,10 +3,12 @@ procps_package: procps
 kubelet_environment_file_path: /etc/default/kubelet
 
 
-kubernetes_apt_keyring_file: "/etc/apt/keyrings/kubernetes-apt-keyring.asc"
-kubernetes_apt_repository: "deb [signed-by={{ kubernetes_apt_keyring_file }}] https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/ /"
+kubernetes_apt_gpg: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/Release.key"
+kubernetes_apt_repository: "https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/"
+kubernetes_apt_keyring: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
 
 
 
 crio_debian_repo_url: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/deb/"
 crio_debian_repo_gpgkey: "https://pkgs.k8s.io/addons:/cri-o:/stable:/v{{ crio_version }}/deb/Release.key"
+crio_debian_keyring: "/etc/apt/keyrings/cri-o-apt-keyring.gpg"

@@ -1,3 +1,12 @@
+- name: Disable swap and remove entry from /etc/fstab
+  command: swapoff -a
+
+- name: remove entry from /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^\s*([^#\s]+\s+){2}swap\s+'
+    replace: '# \g<0>'
+
 - name: Ensure overlay and br_netfilter modules are loaded
   modprobe:
     name: "{{ item }}"

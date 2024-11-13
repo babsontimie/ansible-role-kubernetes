@@ -20,37 +20,28 @@
       yum:
         name: "cri-o"
         state: present
+        update_cache: true
   when: ansible_os_family == 'RedHat'
 
 
 - name: Tasks for Debian-based systems
   block:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Install dependencies for adding repositories
-      apt:
-        name:
-          - software-properties-common
-          - curl
-        state: present
-
     - name: Download CRI-O GPG key for Debian
       apt_key:
         url: "{{ crio_debian_repo_gpgkey }}"
         state: present
-        keyring: "/etc/apt/keyrings/cri-o-apt-keyring.gpg"
+        keyring: "{{ crio_debian_keyring }}"
 
     - name: Add CRI-O repo for Debian
       apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] {{ crio_debian_repo_url }} /"
+        repo: "deb [signed-by={{ crio_debian_keyring }}] {{ crio_debian_repo_url }} /"
         state: present
 
     - name: Install CRI-O Debian
       apt:
         name: "cri-o"
         state: present
+        update_cache: true
   when: ansible_os_family == 'Debian'
 
 - name: Ensure CRI-O is started and enabled
