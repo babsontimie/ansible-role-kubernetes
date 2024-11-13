@@ -19,9 +19,12 @@ Example Playbook
 ----------------
 
 ```yaml
-- hosts: servers
+---
+- name: Install kubernetes
+  hosts: all
+  become: true
   roles:
-     - { role: }
+    - kubernetes.multi
 ```
 
 License
