@@ -1,0 +1,23 @@
+name: Push to Ansible Galaxy
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  galaxy:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Publish to Ansible Galaxy
+        run: |
+          ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }} --role-name kubernetes --namespace TalhaJuikar

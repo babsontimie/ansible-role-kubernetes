@@ -33,7 +33,7 @@ You can override these variables in your playbook.
   hosts: all
   become: true
   roles:
-    - Talhajuikar.kubernetes
+    - TalhaJuikar.kubernetes
   vars:
     container_runtime: "containerd"
 ```
@@ -48,7 +48,7 @@ Example Playbook
   hosts: all
   become: true
   roles:
-    - Talhajuikar.kubernetes
+    - TalhaJuikar.kubernetes
 ```
 
 Example Inventory
