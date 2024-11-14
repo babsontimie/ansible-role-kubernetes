@@ -3,7 +3,6 @@
   service:
     name: kubelet
     state: restarted
-    enabled: true
   listen: restart kubelet
 
 - name: Restart containerd

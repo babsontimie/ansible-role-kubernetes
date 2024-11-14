@@ -5,8 +5,6 @@ Ansible role to install and configure kubernetes cluster on
 RedHat/Debian based systems.
 Intended only for dev and testing purposes.
 
-Requirements
-------------
 This role is tested on the following OS:
 - Rocky Linux 9
 - CentOS 9 Stream
@@ -22,6 +20,10 @@ The default values are set in `defaults/main.yml`.
 kubernetes_version: "" # Default is 1.30
 crio_version: "" # Default is 1.30
 container_runtime: "" # Can be either containerd or crio. Default is crio. 
+kubernetes_pod_network:
+  cni:
+  cidr: 
+  # Default is calico 192.168.0.0/16
 ```
 You can override these variables in your playbook.
 
@@ -31,7 +33,7 @@ You can override these variables in your playbook.
   hosts: all
   become: true
   roles:
-    - Talhajuikar.kubernetes.multi
+    - Talhajuikar.kubernetes
   vars:
     container_runtime: "containerd"
 ```
@@ -46,7 +48,19 @@ Example Playbook
   hosts: all
   become: true
   roles:
-    - Talhajuikar.kubernetes.multi
+    - Talhajuikar.kubernetes
+```
+
+Example Inventory
+----------------
+
+```ini
+[k8s_master]
+host1
+
+[k8s_worker]
+worker1
+worker2
 ```
 
 License

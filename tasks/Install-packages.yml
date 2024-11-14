@@ -1,3 +1,9 @@
+- name: Install Kubernetes packages.
+  package:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ kubernetes_packages }}"
+
 - name: Hold Kubernetes packages on Debian
   command: "apt-mark hold {{ item.name | default(item) }}"
   with_items: "{{ kubernetes_packages }}"
@@ -13,3 +19,9 @@
   command: "yum versionlock {{ item.name | default(item) }}"
   with_items: "{{ kubernetes_packages }}"
   when: ansible_os_family == 'RedHat'
+
+- name: enable kubelet
+  service:
+    name: kubelet
+    enabled: yes
+  notify: restart kubelet

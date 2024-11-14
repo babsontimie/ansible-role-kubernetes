@@ -20,12 +20,8 @@
   include_tasks: containerd.yml
   when: container_runtime == 'containerd'
 
-- name: Install Kubernetes packages.
-  package:
-    name: "{{ item.name | default(item) }}"
-    state: "{{ item.state | default('present') }}"
-  notify: restart kubelet
-  with_items: "{{ kubernetes_packages }}"
+- name: Install Kubernetes packages
+  include_tasks: Install-packages.yml
 
 - name: Setup Control Plane
   include_tasks: control-plane.yml
