@@ -20,4 +20,4 @@ jobs:
 
       - name: Publish to Ansible Galaxy
         run: |
-          ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }} --role-name kubernetes --branch ${GITHUB_REF_NAME} ${GITHUB_REPOSITORY_OWNER} ${REPOSITORY_NAME}
+          ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }} --role-name kubernetes --branch ${{ github.ref }} ${{ github.repository_owner }} ${{ github.repository }}
