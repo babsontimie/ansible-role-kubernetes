@@ -16,3 +16,14 @@ kubernetes_packages:
     state: present
   - name: cri-tools
     state: present
+
+kubernetes_pod_network:
+  # Flannel CNI.
+  # cni: 'flannel'
+  # cidr: '10.244.0.0/16'
+  # Calico CNI.
+  cni: 'calico'
+  cidr: '192.168.0.0/16'
+
+flannel_manifest : "https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
+calico_manifest : "https://raw.githubusercontent.com/projectcalico/calico/master/manifests/calico.yaml"

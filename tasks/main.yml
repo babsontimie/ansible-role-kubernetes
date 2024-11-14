@@ -27,3 +27,9 @@
   notify: restart kubelet
   with_items: "{{ kubernetes_packages }}"
 
+- name: Setup Control Plane
+  include_tasks: control-plane.yml
+  when: "'k8s_master' in group_names"
+
+- name: Setup Worker Node
+  include_tasks: worker-node.yml

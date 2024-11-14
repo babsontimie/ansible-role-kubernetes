@@ -1,0 +1,15 @@
+- name: Hold Kubernetes packages on Debian
+  command: "apt-mark hold {{ item.name | default(item) }}"
+  with_items: "{{ kubernetes_packages }}"
+  when: ansible_os_family == 'Debian'
+
+- name: Install yum-plugin-versionlock on Red Hat
+  package:
+    name: yum-plugin-versionlock
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Hold Kubernetes packages on Red Hat
+  command: "yum versionlock {{ item.name | default(item) }}"
+  with_items: "{{ kubernetes_packages }}"
+  when: ansible_os_family == 'RedHat'

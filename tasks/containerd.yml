@@ -55,4 +55,22 @@
     name: containerd
     state: started
     enabled: true
-  when: ansible_os_family in ['RedHat', 'Debian']
+
+- name: Ensure cri is not in disabled_plugins
+  lineinfile:
+    path: /etc/containerd/config.toml
+    regexp: '^disabled_plugins.*=.*\["cri"\]'
+    line: 'disabled_plugins = []'
+    state: present
+
+- name: Generate default containerd config
+  shell: "containerd config default | tee /etc/containerd/config.toml"
+  become: true
+
+- name: Set SystemdCgroup to true
+  lineinfile:
+    path: /etc/containerd/config.toml
+    regexp: '^(\s*)SystemdCgroup\s*=\s*false'
+    line: 'SystemdCgroup = true'
+    state: present
+  notify: restart containerd
