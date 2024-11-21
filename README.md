@@ -1,6 +1,6 @@
 Ansible Role: Kubernetes.multi
 =========
-![Ansible Galaxy](https://img.shields.io/github/actions/workflow/status/TalhaJuikar/ansible-role-kubernetes/publish.yml?label=Ansible%20Galaxy&event=push)
+[![Push to Ansible Galaxy](https://github.com/TalhaJuikar/ansible-role-kubernetes/actions/workflows/publish.yml/badge.svg)](https://github.com/TalhaJuikar/ansible-role-kubernetes/actions/workflows/publish.yml)
 
 Ansible role to install and configure kubernetes cluster on 
 RedHat/Debian based systems.
