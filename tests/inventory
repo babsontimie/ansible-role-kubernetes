@@ -3,7 +3,7 @@ localhost
 [k8s_master]
 192.168.56.200
 
-[k8s_workers]
+[k8s_worker]
 192.168.56.201
 192.168.56.202
 
