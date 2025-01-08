@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: kubermaster,kuber-workers
   remote_user: root
   roles:
     - kubernetes.multi
