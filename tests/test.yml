@@ -2,5 +2,5 @@
 - hosts: 'k8s_master,k8s_worker'
   remote_user: root
   roles:
-    - kubernetes.multi
+    - TalhaJuikar.kubernetes
 
