@@ -1,2 +1,9 @@
 localhost
 
+[kubermaster]
+192.168.56.200
+
+[kuber-workers]
+192.168.56.201
+192.168.56.202
+
